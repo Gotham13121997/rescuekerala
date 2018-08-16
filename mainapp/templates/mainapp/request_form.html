@@ -69,7 +69,12 @@
 
 	window.onload = function(){
         $("#id_requestee_phone").attr({'type':'tel',
-                'pattern':'[0-9]{10}'});
+                'pattern':'[0-9]{10}'}).keypress(function (e) {
+     //if the letter is not digit then display error and don't type anything
+     if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57)) {
+               return false;
+		}
+		});
 		var gpsField = document.getElementById('id_latlng');
 		var gpsAccuracyField = document.getElementById('id_latlng_accuracy');
 		var options = {
