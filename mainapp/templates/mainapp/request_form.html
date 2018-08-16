@@ -69,7 +69,9 @@
 
 	window.onload = function(){
         $("#id_requestee_phone").attr({'type':'tel',
-                'pattern':'[0-9]{10}'}).keypress(function (e) {
+                'pattern':'[0-9]{10}',
+				'oninvalid':'setCustomValidity("Please provide a valid 10 digits phone number")',
+				'onchange':'try{setCustomValidity("")}catch(e){}'}).keypress(function (e) {
      //if the letter is not digit then display error and don't type anything
      if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57)) {
                return false;
