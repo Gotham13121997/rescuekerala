@@ -68,7 +68,8 @@
 	}
 
 	window.onload = function(){
-        $("#id_requestee_phone").attr('type', 'number');
+        $("#id_requestee_phone").attr({'type':'tel',
+                'pattern':'[0-9]{10}'});
 		var gpsField = document.getElementById('id_latlng');
 		var gpsAccuracyField = document.getElementById('id_latlng_accuracy');
 		var options = {

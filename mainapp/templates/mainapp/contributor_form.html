@@ -23,7 +23,8 @@
   </form>
 <script>
     window.onload = function() {
-        $("#id_phone").attr('type', 'number');
+        $("#id_phone").attr({'type':'tel',
+                'pattern':'[0-9]{10}'});
     }
 </script>
 {% endblock %}
