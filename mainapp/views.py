@@ -212,22 +212,22 @@ def logout_view(request):
 
 class PersonForm(forms.ModelForm):
     class Meta:
-       model = Person
-       fields = [
-        'camped_at',
-        'name',
-        'phone',
-        'age',
-        'gender',
-        'district',
-        'address',
-        'notes'
+        model = Person
+        fields = [
+            'camped_at',
+            'name',
+            'phone',
+            'age',
+            'gender',
+            'district',
+            'address',
+            'notes'
         ]
-       
-       widgets = {
-           'address': forms.Textarea(attrs={'rows':3}),
-           'notes': forms.Textarea(attrs={'rows':3}),
-           'gender': forms.RadioSelect(),
+
+        widgets = {
+            'address': forms.Textarea(attrs={'rows':3}),
+            'notes': forms.Textarea(attrs={'rows':3}),
+            'gender': forms.RadioSelect(),
         }
 
 
