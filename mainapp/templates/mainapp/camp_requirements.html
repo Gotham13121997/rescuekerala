@@ -9,9 +9,10 @@
   </div>
 
   <h3 class="text-center">
-      Camp Details | 
-      ക്യാമ്പിന്റെ വിവരങ്ങൾ 
+      Camp Requirements | 
+      ക്യാമ്പിലെ ആവശ്യങ്ങൾ
   </h3>
+
   <div class="text-center text-danger">
       {% if messages %}
         {% for message in messages %}
@@ -31,10 +32,16 @@
     {% endbuttons %}
 
     <p class="text-center">
-        Please update camp information here
+        Please update this information whenever you receieve new supplies or need more.
         <br>
-        ക്യാമ്പിന്റെ വിവരങ്ങൾ ഇവിടെ അപ്ഡേറ്റ് ചെയ്യുക  
+        നിങ്ങൾ പുതിയ സപ്ലൈസ് സ്വീകരിക്കുകയോ കൂടുതൽ ആവശ്യമുള്ളപ്പോഴോ അപ്ഡേറ്റ് ചെയ്യുക.        
     </p>
   </form> 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>
+  $('#id_gender_0').parents('.radio').hide();
+  $('#id_gender > .radio').removeClass('radio').addClass('radio-inline');
+  </script>
 
 {% endblock %}

@@ -10,11 +10,11 @@
 </p>
 <div class="row">
     <div class="col-md-4">
-        <form action="" method="get">
+        <form action="" method="get" class="simple-form">
             Search with name, mobile number etc. <br>
             പേരോ മൊബൈൽ നമ്പറോ ഉപയോഗിച്ച് തിരയാം 
             <hr>
-            {{ filter.form.as_p }}
+              {% bootstrap_form filter.form bound_css_class=False %}
 
           <button type="submit" class="btn btn-success btn-lg">Search {% bootstrap_icon "chevron-right" %}</button>
       </form>

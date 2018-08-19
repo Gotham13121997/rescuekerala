@@ -1,42 +1,48 @@
 {% extends 'base.html' %} {% load static %} {% block content %} {% load bootstrap3 %}
-
 <div class="container text-center">
-    <h1 class="main-logo">Government of Kerala<span style="font-weight: normal;"> Announcements</span></h1>
-
-    <form action="" method="get">
-        {{ filter.form.as_p }}
-        <input type="submit" class="btn btn-primary" value="Submit" />
-    </form>
+  <h2 class="main-logo">Important Announcements</h2>
+  <div class="text-center">
+    {% for req in pinned_data %}
+    <h4 class="text-danger">{{ req.description | safe }}</h4>
+        {% endfor %}
+  </div>
     <div class="table-responsive">
         <table class="table">
             <tr>
                 <th>Date</th>
-                <th>Name</th>
-                <th>District</th>
-                <th>Link</th>
+                <th>Priority</th>
+                <th>Description</th>
+                <th>Download</th>
             </tr>
             {% for req in data %}
             <tr>
-                <td>{{ req.dateadded }}</td>
-                <td>{{ req.name }}</td>
-                <td>{{ req.get_district_display }}</td>
-                <td><a href="{{ req.link }}">{{ req.link }}</a></td>
+              <td>{{ req.dateadded }}</td>
+              <td>{{ req.get_priority_display }}</td>
+              <td>{{ req.description | safe }}</td>
+              <td>
+                {% if req.image %}
+                <a href="{{req.image.url}}"> View Image </a>
+                {% endif %}<br/>
+                {% if req.upload %}
+                <a href="{{req.upload.url}}">Download</a>
+                {% endif %}
+              </td>
+              {% endfor %}
             </tr>
-            {% endfor %}
         </table>
 
         <div class="pagination">
             <span class="step-links">
                 {% if data.has_previous %}
-                <a href="?page=1&district={{ request.GET.district }}">&laquo; first</a>
-                <a href="?page={{ data.previous_page_number }}&district={{ request.GET.district }}">previous</a>
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ data.previous_page_number }}">previous</a>
                 {% endif %} {% for i in data.paginator.page_range %} {% if data.number == i %}
                 <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
                 {% else %}
-                <a href="?page={{ i }}&district={{ request.GET.district }}">{{ i }}</a>
+                <a href="?page={{ i }}">{{ i }}</a>
                 {% endif %} {% endfor %} {% if data.has_next %}
-                <a href="?page={{ data.next_page_number }}&district={{ request.GET.district }}">next</a>
-                <a href="?page={{ data.paginator.num_pages }}&district={{ request.GET.district }}">last &raquo;</a>
+                <a href="?page={{ data.next_page_number }}">next</a>
+                <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
                 {% endif %}
             </span>
         </div>

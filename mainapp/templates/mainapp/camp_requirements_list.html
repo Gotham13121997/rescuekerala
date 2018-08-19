@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+{% block css %}
+<style>
+.long-col {
+  min-width: 250px;
+}
+</style>
+
+{% endblock %}
+<div class="text-center">
+  <h3>Camp details</h3>
+</div>
+
+<form action="" method="get" class="simple-form">
+    {% bootstrap_form filter.form bound_css_class=False %}
+    <button class="btn btn-default" type="submit">Show Relief Camps</button>
+</form>
+<div class="">
+  <table class="table">
+    <tr>
+      <th>Camp Name</th>
+      <th>District</th>
+      <th>Taluk</th>
+      <th>Village</th>
+      <th>Contacts</th>
+      <th>Total People</th>
+      <th>Total Males</th>
+      <th>Total Females</th>
+      <th>Total Infants</th>
+      <th>Food Requirements</th>
+      <th>Clothing Requirements</th>
+      <th>Sanitary Requirements</th>
+      <th>Medical Requirements</th>
+      <th>Other Requirements</th>
+    </tr>
+  {% for item in data %}
+    <tr valign="top">
+      <td><strong>{{item.name}}</strong></td>
+      <td>
+        {{item.get_district_display}}
+      </td>
+      <td>
+        {{item.taluk}}
+      </td>
+      <td>
+        {{item.village}}
+      </td>
+      <td class="phone-links">
+        {{item.contacts|linebreaks}}
+      </td>
+      <td>
+        {{item.total_people}}
+      </td>
+      <td>
+        {{item.total_males}}
+      </td>
+      <td>
+        {{item.total_females}}
+      </td>
+      <td>
+        {{item.total_infants}}
+      </td>
+      <td class="long-col">
+        {{item.food_req|linebreaks}}
+      </td>
+      <td class="long-col">
+        {{item.clothing_req|linebreaks}}
+      </td>
+      <td class="long-col">
+        {{item.sanitary_req|linebreaks}}
+      </td>
+      <td class="long-col">
+        {{item.medical_req|linebreaks}}
+      </td>
+      <td class="long-col">
+        {{item.other_req|linebreaks}}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  {% if data.paginator.num_pages > 1 %}
+  <div class="pagination" >
+    <span class="step-links">
+        {% if data.has_previous %}
+            <a href="?page=1&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">&laquo; first</a>
+            <a href="?page={{data.previous_page_number}}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">previous</a>
+        {% endif %}
+  
+        {% for i in data.paginator.page_range %}
+        {% if data.number == i %}
+          <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
+        {% else %}
+          <a href="?page={{i}}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">{{ i }}</a>
+        {% endif %}
+        {% endfor %}
+  
+        {% if data.has_next %}
+            <a href="?page={{ data.next_page_number }}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">next</a>
+            <a href="?page={{ data.paginator.num_pages }}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">last &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
+  {% endif %}
+
+
+</div>
+<script>
+  window.onload = function() {
+    $('.phone-links').each(function () {
+      var content = $(this).html();
+      // Convert 10 digit numbers to links
+      links = content.replace(/[0-9 ]{10,15}/g, "<a href=\"tel:$&\">$&</a>");
+      $(this).html(links);
+    })
+  }
+
+</script>
+{% endblock %}

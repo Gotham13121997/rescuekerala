@@ -25,7 +25,7 @@
       <tr>
         <td><b> GPS Location : </b></td>
         <td>
-          {% if not req.is_request_for_others and req.latlng %}
+          {% if req.latlng %}
             <a class="btn btn-sm btn-success" href="https://maps.google.com/?q={{ req.latlng }}" target="_blank">Open in maps</a>
             <br>
             Accuracy: {{ req.latlng_accuracy }}

@@ -3,6 +3,15 @@
 
 {% block css %}
 <style>
+    .table{
+      table-layout: fixed;      
+    }
+
+    .table td{
+      word-wrap: break-word;
+    }
+</style>
+<style>
 @media only screen and (max-width: 800px)  {
 
 		#requests-table table, thead, tbody, th, td, tr {
@@ -59,18 +68,18 @@
 {% block content %}
 <h1 class="text-center">Registered Request</h1>
 <h2 class="text-center">ഇതു വരെ ആവശ്യപ്പെട്ടവ</h2>
-<form action="" method="get" class="text-center">
-       {{ filter.form.as_p }}
+<form action="" method="get">
+       {% bootstrap_form filter.form bound_css_class=False %}
        <input value="View requests" class="btn btn-primary" type="submit" />
  </form>
  <div id="requests-table" class="table-responsive">
-  <table class="table">
+  <table id="req-table" class="table">
     <thead>
       <tr>
         <th>District - ജില്ല</th>
-        <th>Location - സ്ഥലം</th>
-        <th>Requestee - അപേക്ഷകന്‍റെ പേര്</th>
-        <th>Phone - ഫോണ്‍ നമ്പര്‍</th>
+        <th>Location - സ്ഥലം <span><input class="search" id="search-loc" type="text" name="search-loc" /></span></th>
+        <th>Requestee - അപേക്ഷകന്‍റെ പേര്<span><input class="search" id="search-requestee" type="text" name="search-requestee" /></span></th>
+        <th>Phone - ഫോണ്‍ നമ്പര്‍<span><input class="search" id="search-phone" type="text" name="search-phone" /></span></th>
         <th>Date - തീയതി</th>
         <th>More details - കൂടുതൽ വിശദാംശങ്ങൾ</th>
       </tr>
@@ -98,8 +107,8 @@
 
         {% for i in data.paginator.page_range %}
         {% if data.number == i %}
-          <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
-        {% else %}
+            <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
+            {% elif i > data.min_page and i < data.max_page or i|divisibleby:data.lim_page %}
           <a href="?page={{ i }}&district={{ request.GET.district }}&requestee__icontains={{ request.GET.requestee__icontains }}&requestee_phone={{ request.GET.requestee_phone }}&location__icontains={{ request.GET.location__icontains }}">{{ i }}</a>
         {% endif %}
       {% endfor %}
@@ -107,9 +116,39 @@
         {% if data.has_next %}
             <a href="?page={{ data.next_page_number }}&district={{ request.GET.district }}&requestee__icontains={{ request.GET.requestee__icontains }}&requestee_phone={{ request.GET.requestee_phone }}&location__icontains={{ request.GET.location__icontains }}">next</a>
             <a href="?page={{ data.paginator.num_pages }}&district={{ request.GET.district }}&requestee__icontains={{ request.GET.requestee__icontains }}&requestee_phone={{ request.GET.requestee_phone }}&location__icontains={{ request.GET.location__icontains }}">last &raquo;</a>
-        {% endif %}
+            {% endif %}
     </span>
   </div>
 
-</div>
-{% endblock %}
+ </div>
+
+ <script>
+   window.onload = function() {
+     $("input.search").keyup(search);
+   }
+
+   function search() {
+     $("#req-table").find("tr").each(function(i,el) {
+       // skip header row
+       if (i == 0) return
+       el = $(el)
+       var tds = el.find("td")
+       var loc = tds.eq(1).text().toLowerCase()
+       var requestee = tds.eq(2).text().toLowerCase()
+       var phone = tds.eq(3).text()
+       var locKey = $("#search-loc").val().toLowerCase()
+       var reqKey = $("#search-requestee").val().toLowerCase()
+       var phoneKey = $("#search-phone").val()
+
+       if (loc.includes(locKey) &&
+           requestee.includes(reqKey) &&
+           phone.includes(phoneKey))
+         {
+           el.show()
+         } else {
+           el.hide()
+         }
+   })
+   }
+ </script>
+ {% endblock %}

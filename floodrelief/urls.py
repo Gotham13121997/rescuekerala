@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 
@@ -23,4 +25,6 @@ urlpatterns = [
     path('', include('mainapp.urls')),
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view()),
-]
+    path('api/1/rest-auth/', include('rest_auth.urls')),
+    path('api/1/', include('mainapp.api_urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -24,11 +24,9 @@
 </div>
 
 <form action="" method="get">
-    {{ filter.form }}
-    <button class="btn btn-default" type="submit"> Select {% bootstrap_icon "chevron-right" %}</button>
+    {{ filter.form.as_p }}
+    <button class="btn btn-default" type="submit"> Show Camps {% bootstrap_icon "chevron-right" %}</button>
 </form>
-
-{% if camps.count > 0 %}
 <table class="table table-hover">
     <thead>
         <tr>
@@ -40,7 +38,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for item in camps %}
+        {% for item in data %}
         <tr>
             <td><strong>{{ item.name }}</strong></td>
             <td>{{ item.get_district_display }}</td>
@@ -51,8 +49,11 @@
                     <a href="/camp/{{ item.id  }}/add_person" class="btn btn-default">
                         {% bootstrap_icon "user" %}  Register People
                     </a>
-                    <a href="/camp/{{ item.id  }}/details" class="btn btn-default">
+                    <a href="/camp/{{ item.id  }}/requirements" class="btn btn-default">
                         {% bootstrap_icon "pencil" %} Requirements
+                    </a>
+                     <a href="/camp/{{ item.id  }}/details" class="btn btn-default">
+                        {% bootstrap_icon "pencil" %} Camp Details
                     </a>
                 </div>
             </td>
@@ -60,13 +61,28 @@
         {% endfor %}
     </tbody>
 </table>
-</div>
-{% else  %}
-<div class="text-center text-warning">
-  <h4>
-      No relief camps found.
-  </h4>
-  
+
+{% if data.paginator.num_pages > 1 %}
+<div class="pagination" >
+  <span class="step-links">
+      {% if data.has_previous %}
+          <a href="?page=1&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">&laquo; first</a>
+          <a href="?page={{data.previous_page_number}}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">previous</a>
+      {% endif %}
+
+      {% for i in data.paginator.page_range %}
+      {% if data.number == i %}
+        <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
+      {% else %}
+        <a href="?page={{i}}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">{{ i }}</a>
+      {% endif %}
+      {% endfor %}
+
+      {% if data.has_next %}
+          <a href="?page={{ data.next_page_number }}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">next</a>
+          <a href="?page={{ data.paginator.num_pages }}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">last &raquo;</a>
+      {% endif %}
+  </span>
 </div>
 {% endif %}
 

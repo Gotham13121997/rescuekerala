@@ -2,90 +2,64 @@
 {% load bootstrap3 %}
 
 {% block content %}
-
-<h3>
-        Relief Camps | 
-        ദുരിതാശ്വാസ ക്യാമ്പുകൾ
+<h3 class="text-center">
+  Relief Camps |
+  ദുരിതാശ്വാസ ക്യാമ്പുകൾ
 </h3>
 
 <div class="row">
-    <div class="col-md-4">
-        <a class="btn btn-info btn-lg" href="/find_people">
-                Person Search - വ്യക്തിയെ തിരയുക
-        </a>
-    </div>
-    <div class="col-md-8 text-right">
-        <a class="btn btn-default" href="/coordinator_home" style="margin-top: 5px;">
-            Coordinator Login
-        </a>
-        <p>
-          Contact your coordinator to get login details
-          <br>
-          ലോഗിൻ ഡീറ്റെയിൽസ് ലഭിക്കാൻ കോർഡിനേറ്ററെ സമീപിക്കുക
-        </p>
-    </div>
+  <div class="col-md-12 text-right">
+    <a class="btn btn-default" href="/coordinator_home" style="margin-top: 5px;">
+      Coordinator Login
+    </a>
+    <p>
+      Contact your coordinator to get login details
+      <br>
+      ലോഗിൻ ഡീറ്റെയിൽസ് ലഭിക്കാൻ കോർഡിനേറ്ററെ സമീപിക്കുക
+    </p>
+  </div>
 </div>
 
-<hr>
-
-<div class="text-center">
-  <h4>Select District to see Relief Camps</h4>
+<div class="container text-center">
+    <a href="/relief_camps_list" class="home-button card" role="button">
+        {% bootstrap_icon "home" %}
+        <span class="text text-center">
+            Relief Camps List<br/>
+            ദുരിതാശ്വാസ ക്യാമ്പുകൾ ലിസ്റ്റ് 
+            <span class="ml small"></span>
+        </span>
+    </a>
+    <!--<a href="/find_people" class="home-button card" role="button">-->
+        <!--{% bootstrap_icon "user" %}-->
+        <!--<span class="text text-center">-->
+            <!--Person Finder<br/>-->
+            <!--വ്യക്തിയെ തിരയുക-->
+            <!--<span class="ml small"></span>-->
+        <!--</span>-->
+    <!--</a>-->
+    <a href="/camp_requirements" class="home-button card" role="button">
+        {% bootstrap_icon "list" %}
+        <span class="text text-center">
+            Supply Requirements<br/>
+            ക്യാമ്പിന്റെ ആവശ്യങ്ങൾ 
+            <span class="ml small"></span>
+        </span>
+    </a>
+    <a href="/add_camp_data" class="home-button card" role="button">
+        {% bootstrap_icon "home" %}
+        <span class="text text-center">
+            Add Data<br/>
+            ക്യാമ്പുകളെ കുറിച്ചുള്ള വിവരങ്ങൾ ചേർക്കുക
+            <span class="ml small"></span>
+        </span>
+    </a>
+    <p class="home-info">
+        Contact Control Room or Disaster Management Cell or District Administration for any support.<br>
+        Volunteers may contact District Project Managers for support related to volunteering and contributions<br>
+        <br/>
+        സഹായത്തിനായി വൊളന്‍റീയര്‍മാര്‍ തയ്യാറാണ്. സഹായം ആവശ്യമെങ്കില്‍ ഒരോ ജില്ലയിലെയും നിയോഗിക്കപെട്ട ഉദ്യോഗസ്ഥരുമായി ബന്ധപ്പെടാം
+    </p>
 </div>
 
-<form action="" method="get">
-    {{ filter.form }}
-    <button class="btn btn-default" type="submit">Show Relief Camps</button>
-</form>
 
-{% if relief_camps.count > 0 %}
-<div>
-  <table class="table">
-    <tr>
-      <th>District</th>
-      <th>Camp Name</th>
-      <th>Map</th>
-      <th>Address</th>
-      <th>Contact Numbers</th>
-      <th>Registrations</th>
-    </tr>
-  {% for item in relief_camps %}
-    <tr valign="top">
-      <td><strong>{{ item.get_district_display }}</strong></td>
-      <td>
-        {{ item.name }}
-      </td>
-      <td>
-        {% if item.map_link %} <a href="{{ item.map_link}}">Map Link</a> {% else %} N/A {% endif %}
-      </td>
-      <td>
-        {{ item.location | linebreaks }}
-      </td>
-      <td class="phone-links">
-        <!-- Please don't add a <a href> tag here. It's added dynamically -->
-        {{ item.contacts | linebreaks }}
-      </td>
-      <td>
-        {{ item.count }}
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
-</div>
-{% elif district_chosen  %}
-<div class="text-center text-warning">
-  No relief camps listed for this district yet.
-</div>
-{% endif %}
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>
-  $('.phone-links').each(function () {
-    var content = $(this).html();
-    // Convert 10 digit numbers to links
-    links = content.replace(/[0-9 ]{8,15}/g, "<a href=\"tel:$&\">$&</a>");
-    $(this).html(links);
-  })
-
-</script>
 {% endblock %}

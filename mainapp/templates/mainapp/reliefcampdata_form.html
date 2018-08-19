@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<h1 class="text-center">Add Relief Camp Data</h1>
+<h2 class="text-center">ക്യാമ്പുകളെ കുറിച്ചുള്ള വിവരങ്ങൾ ചേർക്കുക‍</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">
+    {% bootstrap_icon "star" %} Submit
+    </button>
+    {% endbuttons %}
+  </form>
+
+<script>
+    window.onload = function() {
+        $("#id_phone").attr('type', 'number');
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<h3>
+  Relief Camps List
+  ദുരിതാശ്വാസ ക്യാമ്പുകൾ
+</h3>
+
+
+<hr>
+
+<div class="text-center">
+  <h4>Select District to see Relief Camps</h4>
+</div>
+
+<form id="relief-comps-form" action="" method="get">
+  {% bootstrap_form filter.form bound_css_class=False %}
+</form>
+
+{% if relief_camps.count > 0 %}
+<div>
+  <table class="table">
+    <tr>
+      <th>District</th>
+      <th>Camp Name</th>
+      <th>Map</th>
+      <th>Address</th>
+      <th>Contact Numbers</th>
+      <th>Registrations</th>
+    </tr>
+    {% for item in relief_camps %}
+    <tr valign="top">
+      <td><strong>{{ item.get_district_display }}</strong></td>
+      <td>
+        {{ item.name }}
+      </td>
+      <td>
+        {% if item.map_link %} <a href="{{ item.map_link}}">Map Link</a> {% else %} N/A {% endif %}
+      </td>
+      <td>
+        {{ item.location | linebreaks }}
+      </td>
+      <td class="phone-links">
+        <!-- Please don't add a <a href> tag here. It's added dynamically -->
+        {{ item.contacts | linebreaks }}
+      </td>
+      <td>
+        {{ item.count }}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% elif district_chosen  %}
+<div class="text-center text-warning">
+  No relief camps listed for this district yet.
+</div>
+{% endif %}
+
+<script>
+  window.onload = function() {
+    $('.phone-links').each(function () {
+      var content = $(this).html();
+      // Convert 10 digit numbers to links
+      links = content.replace(/[0-9 ]{10,15}/g, "<a href=\"tel:$&\">$&</a>");
+      $(this).html(links);
+    })
+
+    $("#id_district").change(() => {
+      $("#relief-comps-form").submit();
+    })
+  }
+
+</script>
+
+{% endblock %}
