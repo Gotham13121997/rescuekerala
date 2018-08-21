@@ -67,11 +67,11 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="text-center">List of NGOs</h1>
+<h1 class="text-center">List of NGOs/Companies</h1>
 {# <h2 class="text-center">ഇതു വരെ ആവശ്യപ്പെട്ടവ</h2> #}
 <form action="" method="get">
        {% bootstrap_form filter.form bound_css_class=False %}
-       <input value="View requests" class="btn btn-primary" type="submit" />
+       <input value="View NGOs/Companies" class="btn btn-primary" type="submit" />
  </form>
  <div id="requests-table" class="table-responsive">
   <table id="req-table" class="table">
