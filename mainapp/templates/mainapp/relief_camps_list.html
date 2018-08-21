@@ -28,7 +28,7 @@
       <th>Map</th>
       <th>Address</th>
       <th>Contact Numbers</th>
-      <th>Registrations</th>
+      <th>Total People</th>
     </tr>
     {% for item in relief_camps %}
     <tr valign="top">
@@ -47,7 +47,7 @@
         {{ item.contacts | linebreaks }}
       </td>
       <td>
-        {{ item.count }}
+        {{ item.total_people }}
       </td>
     </tr>
     {% endfor %}

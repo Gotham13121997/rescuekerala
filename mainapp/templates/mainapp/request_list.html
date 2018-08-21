@@ -4,7 +4,7 @@
 {% block css %}
 <style>
     .table{
-      table-layout: fixed;      
+      table-layout: fixed;
     }
 
     .table td{
@@ -50,12 +50,13 @@
 			padding-right: 10px;
 			white-space: normal;
 		}
-		#requests-table td:nth-of-type(1):before { content: "District - ജില്ല"; }
-    #requests-table td:nth-of-type(2):before { content: "Location - സ്ഥലം"; }
-    #requests-table td:nth-of-type(3):before { content: "Requestee - അപേക്ഷകന്‍റെ പേര്"; }
-    #requests-table td:nth-of-type(4):before { content: "Phone - ഫോണ്‍ നമ്പര്‍"; }
-    #requests-table td:nth-of-type(5):before { content: "Date - തീയതി"; }
-    #requests-table td:nth-of-type(6):before { content: "More details - കൂടുതൽ വിശദാംശങ്ങൾ"; }
+    #requests-table td:nth-of-type(1):before { content: "Request Number - അപേക്ഷ നമ്പര്‍"; }
+    #requests-table td:nth-of-type(2):before { content: "District - ജില്ല"; }
+    #requests-table td:nth-of-type(3):before { content: "Location - സ്ഥലം"; }
+    #requests-table td:nth-of-type(4):before { content: "Requestee - അപേക്ഷകന്‍റെ പേര്"; }
+    #requests-table td:nth-of-type(5):before { content: "Phone - ഫോണ്‍ നമ്പര്‍"; }
+    #requests-table td:nth-of-type(6):before { content: "Date - തീയതി"; }
+    #requests-table td:nth-of-type(7):before { content: "More details - കൂടുതൽ വിശദാംശങ്ങൾ"; }
   }
 @media only screen and (max-width: 420px)  {
 		#requests-table td {
@@ -76,23 +77,27 @@
   <table id="req-table" class="table">
     <thead>
       <tr>
+        <th>Request Number - അപേക്ഷ നമ്പര്‍</th>
         <th>District - ജില്ല</th>
-        <th>Location - സ്ഥലം <span><input class="search" id="search-loc" type="text" name="search-loc" /></span></th>
-        <th>Requestee - അപേക്ഷകന്‍റെ പേര്<span><input class="search" id="search-requestee" type="text" name="search-requestee" /></span></th>
-        <th>Phone - ഫോണ്‍ നമ്പര്‍<span><input class="search" id="search-phone" type="text" name="search-phone" /></span></th>
+        <th>Location - സ്ഥലം</th>
+        <th>Requestee - അപേക്ഷകന്‍റെ പേര</th>
+        <th>Phone - ഫോണ്‍ നമ്പര്‍</th>
         <th>Date - തീയതി</th>
         <th>More details - കൂടുതൽ വിശദാംശങ്ങൾ</th>
+		<th>Update</th>
       </tr>
     </thead>
     <tbody>
     {% for req in data %}
         <tr>
+          <td>{{ req.id }}</td>
           <td>{{ req.get_district_display }}</td>
           <td>{{ req.location }}</td>
           <td>{{ req.requestee }}</td>
           <td><a href="tel:{{ req.requestee_phone }}" >{{ req.requestee_phone }}</a></td>
           <td>{{ req.dateadded }}</td>
           <td><a class="btn btn-sm btn-success" href="{%url 'requestdetailsview' req.id %}" target="_blank">More details</a>
+	  	  <td><a class="btn btn-sm btn-success" href="{%url 'requestupdateview' req.id %}" target="_blank">Update</a></td>
         </tr>
     {% endfor %}
   </tbody>

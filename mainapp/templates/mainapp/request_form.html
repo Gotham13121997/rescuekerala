@@ -40,7 +40,7 @@
         2. Choose the <b>Allow</b> option.
       </div>
       <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" id="modal_ok_button" aria-hidden="true">Ok</button>
+        <button class="btn btn-primary" data-dismiss="modal" id="modal_ok_button" aria-hidden="true">Ok</button>
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@
 		for(var i=0; i< checkboxes.length; i++) {
 			checkboxes[i].addEventListener("change",checkVisibility);
 		}
- 	 	
+
  	 	function checkVisibility(){
 			var formgroups = document.querySelectorAll(".form-group");
 			Array.prototype.forEach.call(formgroups, function(el, i){
@@ -72,13 +72,13 @@
 						}
 					}
 					else if(checkboxElem.checked){
-						formgroups[i+1].style.display = "block";						
+						formgroups[i+1].style.display = "block";
 					}
 					else{
-						formgroups[i+1].style.display = "none";												
+						formgroups[i+1].style.display = "none";
 					}
 				}
-			});  		
+			});
 
 		}
   }
@@ -87,7 +87,7 @@
 	}
 
 	window.onload = function(){
-        $("#id_requestee_phone").attr('type', 'number');
+        $("#id_requestee_phone").attr('type', 'text');
 		var gpsField = document.getElementById('id_latlng');
 		var gpsAccuracyField = document.getElementById('id_latlng_accuracy');
 		gpsField.readOnly = true;
@@ -120,8 +120,18 @@
 		$('#instructionModal').on('hidden.bs.modal', function (e) {
 		  navigator.geolocation.getCurrentPosition(success, error, options);
 		})
-
-		$('#instructionModal').modal('show');
+    try {
+      navigator.permissions.query({'name': 'geolocation'}).then(
+        function(result) {
+          switch (result.state) {
+            case 'prompt': $('#instructionModal').modal('show'); break;
+            case 'granted': navigator.geolocation.getCurrentPosition(success, error, options); break;
+          }
+      })
+    } catch (err) {
+      // capture cases that don't have navigator or navigator.permissions
+      $('#instructionModal').modal('show');
+    }
 	}
 
 	function showLocationPickerForm(){

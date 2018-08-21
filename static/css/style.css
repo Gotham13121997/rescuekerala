@@ -191,3 +191,123 @@ table thead tr th {
     margin-right: 0;
     width: 100%;
 }
+
+.announcement-cards{
+    display: block;
+    max-width: 800px;
+    padding: 0 10px;
+    margin: 20px auto;
+}
+.priority-index{
+    margin-bottom: 10px;
+    font-size: 12px;
+    color:#777777;
+}
+    .priority-index b{
+        display: inline-block;
+        width:14px;
+        height: 4px;
+        border-radius: 2px;
+        margin: 0 2px 2.5px 10px;
+    }
+.card{
+    display: block;
+    background: #FFFFFF;
+    padding: 25px 20px 15px;
+    margin-bottom: 20px;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    overflow: auto;
+    height: auto;
+    box-shadow:0 1px 5px 0 rgba(0,0,0,0.1);
+    border-left:5px solid transparent;
+}
+.card-text{
+    display: block;
+    color: black;
+    font-size: 14px;
+    margin-bottom:6px;
+}
+    .card-link{
+        margin: 12px 5px;
+    }
+.card-time{
+    float: left;
+    color: #888888;
+    font-size: 12px;
+    padding:2px 8px;
+}
+    .card-time .glyphicon{
+        font-size: 80%;
+    }
+.card-priority{
+    float: left;
+    color: #FFFFFF;
+    padding:2px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+    display:inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+@media screen and (min-width: 640px) {
+    .card-text{
+        text-align: left;
+    }
+}
+
+.btn.btn-msg{
+    margin: 6px;
+}
+
+/* Card Priority Variation */
+.card.priority-very-important{
+        border-top:5px solid #e05959;
+        border-left: none;
+        margin-bottom: 40px;
+        box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    }
+    .card.priority-very-important .card-text{
+        font-size: 16px;
+    }
+    .card.priority-very-important .card-priority{
+        font-size: 14px;
+        padding: 4px 12px;
+        background-color:#e05959;
+        -webkit-animation: 1s pinned-message-priority infinite;
+        animation: 1s pinned-message-priority infinite;
+    }
+    .card.priority-very-important .card-time{
+        float: right
+    }
+
+.card.priority-high{border-color:#ef7831;}
+    .card.priority-high .card-priority{background-color:#ef7831;}
+
+.card.priority-medium{border-color:#7ab754;}
+    .card.priority-medium .card-priority{background-color:#7ab754;}
+
+.card.priority-low{border-color:#286090;}
+    .card.priority-low .card-priority{background-color:#286090;}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes pinned-message-priority {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Standard syntax */
+@keyframes pinned-message-priority {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

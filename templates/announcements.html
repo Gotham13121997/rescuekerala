@@ -1,53 +1,56 @@
 {% extends 'base.html' %} {% load static %} {% block content %} {% load bootstrap3 %}
 <div class="container text-center">
   <h2 class="main-logo">Important Announcements</h2>
-  <div class="text-center">
-    {% for req in pinned_data %}
-    <h4 class="text-danger">{{ req.description | safe }}</h4>
-        {% endfor %}
-  </div>
-    <div class="table-responsive">
-        <table class="table">
-            <tr>
-                <th>Date</th>
-                <th>Priority</th>
-                <th>Description</th>
-                <th>Download</th>
-            </tr>
-            {% for req in data %}
-            <tr>
-              <td>{{ req.dateadded }}</td>
-              <td>{{ req.get_priority_display }}</td>
-              <td>{{ req.description | safe }}</td>
-              <td>
-                {% if req.image %}
-                <a href="{{req.image.url}}"> View Image </a>
-                {% endif %}<br/>
-                {% if req.upload %}
-                <a href="{{req.upload.url}}">Download</a>
-                {% endif %}
-              </td>
-              {% endfor %}
-            </tr>
-        </table>
+    <div class="announcement-cards">
 
-        <div class="pagination">
-            <span class="step-links">
-                {% if data.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ data.previous_page_number }}">previous</a>
-                {% endif %} {% for i in data.paginator.page_range %} {% if data.number == i %}
-                <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
-                {% else %}
-                <a href="?page={{ i }}">{{ i }}</a>
-                {% endif %} {% endfor %} {% if data.has_next %}
-                <a href="?page={{ data.next_page_number }}">next</a>
-                <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
+        {% for req in pinned_data %}
+            <div class="card priority-very-important">
+                <span class="card-text">
+                    {{ req.description | safe | linebreaks }}<br/>
+                </span>
+                <span class="card-priority">Very Important</span><br/>
+                <span class="card-time">{% bootstrap_icon "time" %} {{ req.dateadded }}</span>
+            </div>
+        {% endfor %}
+        
+        <div class="priority-index">
+            Priority : <b style="background:#ef7831"></b> High <b style="background:#7ab754"></b> Medium <b style="background:#286090"></b> Low
         </div>
+            
+        {% for req in data %}
+            <div class="card priority-{{ req.get_priority_display.lower }}">
+                <span class="card-text">
+                    {{ req.description | safe }}<br/>
+                    {% if req.image %}
+                        <a href="{{req.image.url}}"
+                            class="btn btn-default card-link">{% bootstrap_icon "eye-open" %} View Image</a>
+                    {% endif %}
+                    {% if req.upload %}
+                        <a href="{{req.upload.url}}"
+                            class="btn btn-default card-link">{% bootstrap_icon "download" %} Download</a>
+                    {% endif %}
+                </span>
+                <span class="card-time">{% bootstrap_icon "time" %} {{ req.dateadded }}</span>
+            </div>
+        {% endfor %}
     </div>
 
+    <div class="pagination">
+        <span class="step-links">
+            {% if data.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ data.previous_page_number }}">previous</a>
+            {% endif %} {% for i in data.paginator.page_range %} {% if data.number == i %}
+            <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
+            {% else %}
+            <a href="?page={{ i }}">{{ i }}</a>
+            {% endif %} {% endfor %} {% if data.has_next %}
+            <a href="?page={{ data.next_page_number }}">next</a>
+            <a href="?page={{ data.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 </div>
+
 
 {% endblock %}

@@ -8,6 +8,7 @@ router.register(r'persons', api_views.PersonViewSet)
 
 urlpatterns = [
     path('camplist/', api_views.CampList.as_view(), name='api_camplist'),
+    path('request_update/', api_views.request_update_list, name='api_request_update'),
 ]
 
 urlpatterns += router.urls

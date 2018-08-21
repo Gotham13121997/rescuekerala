@@ -3,36 +3,9 @@
 
 {% block content %}
 
-<h1 class="text-center">To Contribute</h1>
+<h1 class="text-center">To Contribute Materials</h1>
 <h2 class="text-center">സംഭാവന നല്‍കാന്‍</h2>
   <form method="post">
-    <b class="text-center"> You can also contribute to Chief Minister's Fund:<br>
-      മുഖ്യമന്തിയുടെ ദുരിതാശ്വാസ നിധിയിലേക്ക് സംഭാവന ചെയ്യാം<br/><br>
-      <table class="table">
-        <tr>
-          <td>Account number</td> <td>67319948232</td>
-        </tr>
-        <tr>
-          <td>Name on Account</td> <td>Chief Minister's Distress Relief Fund</td>
-        </tr>
-        <tr>
-          <td>Account Type</td> <td>Savings</td>
-        </tr>
-        <tr>
-          <td>Bank</td> <td>SBI</td>
-        </tr>
-        <tr>
-          <td>Branch</td> <td>City Branch, TVM</td>
-        </tr>
-        <tr>
-          <td>IFS Code</td> <td>SBIN0070028</td>
-        </tr>
-        <tr>
-          <td>SWIFT Code</td> <td>SBININBBT08</td>
-        </tr>
-      </table>
-      <a href="https://donation.cmdrf.kerala.gov.in/">Donate to Chief Minister's Fund Online</a>
-    </b><br><br>
   {% csrf_token %}
   {% bootstrap_form form %}
   {% buttons %}

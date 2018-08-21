@@ -44,6 +44,7 @@
             $('#id_latlng_accuracy').val('0 Meters');
 
           infowindowContent.children['place-icon'].src = place.icon;
+          $('#place-icon').show();
           infowindowContent.children['place-name'].textContent = place.name;
           infowindowContent.children['place-address'].textContent = address;
         });

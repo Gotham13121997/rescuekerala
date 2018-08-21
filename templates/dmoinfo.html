@@ -6,28 +6,40 @@
 
 <div class="container text-center">
     <h1 class="main-logo">kerala<span style="font-weight: normal;">rescue  DMO Portal</span></h1>
-    <p style="margin-bottom:20px;">
-        <i>Stats for your District </i><br/>
+    <p style="margin-top:60px; margin-bottom: 30px">
+        <strong style="font-size:  40px ;"> Camp Stats per District </strong><br/>
   </p>
 
-  <div class="row">
-    <div class="col-xs-4" style="font-size:  30px">
-        Volunteers
-        <br> {{volcount}}
-        <br>Registered</div>
-    <div class="col-xs-4" style="font-size:  30px">
-        Contributors<br>
-    {{conserve}} Served 
-    <br>
-    from {{contotal}}</div>
-    <div class="col-xs-4" style="font-size:  30px">
-            Requests<br>
-        {{reqserve}} Served 
-        <br>
-        from {{reqtotal}}</div>
-  
-  </div>
-
+  <div id="requests-table" class="table-responsive">
+    <table id="req-table" class="table">
+        <thead>
+          <tr>
+            <th>District - ജില്ല</th>
+            <th>Total request for help received</th>
+            <th>Requests Completed</th>
+            <th>Requests Ongoing</th>
+            <th>Total Contributions</th>
+            <th>Contributions Served</th>
+            <th>Total Volunteers</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        {% for d in data %}
+            <tr>
+              <td>{{ d.district }}</td>
+              <td>{{ d.req }}</td>
+              <td>{{ d.reqd }}</td>
+              <td>{{ d.reqo }}</td>
+              <td>{{ d.con }}</td>
+              <td>{{ d.cons }}</td>
+              <td>{{ d.vol }}</td>
+              
+            </tr>
+        {% endfor %}
+      </tbody>
+      </table>
+    </div>
 
 
 </div>

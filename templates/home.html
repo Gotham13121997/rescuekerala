@@ -9,76 +9,88 @@
     <p style="margin-bottom:20px;">
         <i>An initiative by Govt. of Kerala, Kerala State IT Mission and IEEE Kerala Section<br>
         For effective collaboration and communications between authorities, volunteers and public </i><br/>
-        <strong>ദുരിതാശ്വാസ പ്രവര്‍ത്തനങ്ങളും രക്ഷാ ദൗത്യങ്ങളും ഏകോപിപ്പിക്കാന്‍</strong><br/>
-    <b><a href="{% static 'images/msg_cm.jpg' %}">Message from Hon. Chief Minister of Kerala</a></b>
+        <strong><span class="notranslate">ദുരിതാശ്വാസ പ്രവര്‍ത്തനങ്ങളും രക്ഷാ ദൗത്യങ്ങളും ഏകോപിപ്പിക്കാന്‍</span></strong><br/>
+          <a class="btn btn-info btn-msg" href="{% static 'images/msg_cm.jpg' %}">Message from Hon. Chief Minister of Kerala</a>
+          <a class="btn btn-info btn-msg" href="https://donation.cmdrf.kerala.gov.in/">Donate to Chief Minister's Fund Online</a>
   </p>
     <a href="/request/" class="home-button card" role="button">
         {% bootstrap_icon "grain" %}
         <span class="text">
             Request<br/>for help<br/>
-            <span class="ml small">സഹായം അഭ്യര്‍ഥിക്കാന്‍</span>
+            <span class="ml small notranslate">സഹായം അഭ്യര്‍ഥിക്കാന്‍</span>
+        </span>
+    </a>
+    <a href="/relief_camps/" class="home-button card" role="button">
+        {% bootstrap_icon "home" %}
+        <span class="text">
+          Relief Camps<br/>
+          <span class="ml small notranslate">ദുരിതാശ്വാസ ക്യാമ്പുകൾ</span>
         </span>
     </a>
     <a href="/reg_contrib/" class="home-button card" role="button">
         {% bootstrap_icon "apple" %}
         <span class="text">
             To Contribute<br/>
-            <span class="ml small">സംഭാവന നല്‍കാന്‍</span>
+            <span class="ml small notranslate">സംഭാവന നല്‍കാന്‍</span>
         </span>
     </a>
     <a href="/district_needs/" class="home-button card" role="button">
         {% bootstrap_icon "map-marker" %}
         <span class="text">
-            DISTRICT NEEDS &amp; COLLECTION CENTERS<br></span>
-            <span class="ml small">ജില്ലകളിലെ ആവശ്യങ്ങള്‍</span>
+            DISTRICT NEEDS &amp; COLLECTION CENTERS<br/>
+            <span class="ml small notranslate">ജില്ലകളിലെ ആവശ്യങ്ങള്‍</span>
+        </span>
     </a>
     <a href="/ngo-volunteer/" class="home-button card" role="button">
         {% bootstrap_icon "user" %}
         <span class="text">
-            Register as<br/>a volunteer or NGO
-            <span class="ml small">വൊളന്‍റീയര്‍ ആകാന്‍</span>
+            Volunteer/NGO <br/>
+            <span class="ml small notranslate">വൊളന്‍റീയര്‍ </span>
         </span>
     </a>
     <a href="/map-view" class="home-button card" role="button">
         {% bootstrap_icon "globe" %}
         <span class="text">
             Maps<br/>
-            <span class="ml small">സഹായം ആവശ്യമായ സ്ഥലങ്ങൾ &amp;<br/>ദുരിതാശ്വാസ ക്യാമ്പുകൾ</span>
+            <span class="ml small notranslate">സഹായം ആവശ്യമായ സ്ഥലങ്ങൾ &amp;<br/>ദുരിതാശ്വാസ ക്യാമ്പുകൾ</span>
         </span>
-    </a> 
+    </a>
     <a href="{% url 'contactus' %}" class="home-button card" role="button">
         {% bootstrap_icon "phone" %}
         <span class="text">
             Contact <br>INFO<br/>
-            <span class="ml small">ഞങ്ങളുമായി ബന്ധപ്പെടാന്‍</span>
+            <span class="ml small notranslate">ഞങ്ങളുമായി ബന്ധപ്പെടാന്‍</span>
         </span>
     </a>
     <a href="/requests/?district=" class="home-button card" role="button">
       {% bootstrap_icon "list" %}
       <span class="text">
         Registered Requests<br/>
-        <span class="ml small">ഇതു വരെ ആവശ്യപ്പെട്ടവ</span>
+        <span class="ml small notranslate">ഇതു വരെ ആവശ്യപ്പെട്ടവ</span>
       </span>
     </a>
-    <a href="/relief_camps/" class="home-button card" role="button">
-        {% bootstrap_icon "home" %}
-        <span class="text">
-          Relief Camps<br/>
-          <span class="ml small">ദുരിതാശ്വാസ ക്യാമ്പുകൾ</span>
-        </span>
-      </a>
     <a href="/announcements" class="home-button card" role="button">
         {% bootstrap_icon "bullhorn" %}
         <span class="text">
         Announcements<br/>
-            <span class="ml small">അറിയിപ്പുകൾ</span>
+            <span class="ml small notranslate">അറിയിപ്പുകൾ</span>
+        </span>
+    </a>
+    <a href="/privatecc" class="home-button card" role="button">
+        {% bootstrap_icon "briefcase" %}
+        <span class="ml text small">
+                Private Relief Centers and<br> Collection Centers<br/>
+            <span class="ml small notranslate"></span>
         </span>
     </a>
     <p class="home-info">
         Contact Control Room or Disaster Management Cell or District Administration for any support.<br>
         Volunteers may contact District Project Managers for support related to volunteering and contributions<br>
         <br/>
-        സഹായത്തിനായി വൊളന്‍റീയര്‍മാര്‍ തയ്യാറാണ്. സഹായം ആവശ്യമെങ്കില്‍ ഒരോ ജില്ലയിലെയും നിയോഗിക്കപെട്ട ഉദ്യോഗസ്ഥരുമായി ബന്ധപ്പെടാം
+        <span class="notranslate">സഹായത്തിനായി വൊളന്‍റീയര്‍മാര്‍ തയ്യാറാണ്. സഹായം ആവശ്യമെങ്കില്‍ ഒരോ ജില്ലയിലെയും നിയോഗിക്കപെട്ട ഉദ്യോഗസ്ഥരുമായി ബന്ധപ്പെടാം</span>
     </p>
+  <p class="slack">
+       Our Collaboration Platform (Slack) <a href="https://bit.ly/keralarescueslack">Join</a>
+  </p>   
 </div>
 {% endblock %}

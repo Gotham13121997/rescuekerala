@@ -4,19 +4,84 @@
 {% block content %}
 <h1 class="text-center">Register as Volunteer</h1>
 <h2 class="text-center">വൊളന്‍റീയര്‍ ആകാന്‍</h2>
-  <form method="post">
+  <form method="post" id="volunteer_consent_form">
   {% csrf_token %}
+  {% if form.instance.pk %}
+  
+	 <div class="table-responsive">
+	  <table class="table">
+	    <thead>
+	      <tr>
+	        <th colspan="2" style="text-align:center;">Volunteer details</th>
+	      </tr>
+	    </thead>
+
+	    <tbody>
+	      <tr>
+	        <td><b> District : </b></td><td>{{ form.instance.district }}</td>
+	      </tr>
+	      <tr>
+	        <td><b> Name : </b></td><td>{{ form.instance.name }}</td>
+	      </tr>
+	      <tr>
+	        <td><b> Organisation : </b></td><td>{{ form.instance.organisation }}</td>
+	      </tr>
+	      <tr>
+	        <td><b> Consent : </b></td><td>{% if form.instance.has_consented %} yes {% else %} no {% endif %}</td>
+	      </tr>
+		  <tr>
+			  <td colspan="2" style="text-align:center;">	
+				  <button type="button" class="btn btn-success consent" data-consent="confirm">Confirm</button>&nbsp;&nbsp;
+				  <button type="button" class="btn btn-danger consent" data-consent="cancel">Cancel</button>
+			  </td>
+		  </tr>
+
+	    </tbody>
+	  </table>
+
+	</div>
+	<!-- hack to make jquery update the variable -->
+	<div hidden>
+    {% bootstrap_form form %}
+	</div>
+	
+  {% else %}
   {% bootstrap_form form %}
   {% buttons %}
   <button type="submit" class="btn btn-primary">
   {% bootstrap_icon "star" %} Submit
   </button>
   {% endbuttons %}
+  
+  {% endif %}
+  
+  
   </form>
+  
+  <blockquote>
+	  <small>
+	  By providing your personal information, you consent to making such information accessible to persons who visit this website. You further acknowledge and agree that in order to serve the specific purposes for which personal information is volunteered by you, such information needs to be accessible to the public at large and therefore, by volunteering your information on this website, you consent to making such information public. By providing your phone number and email address, you further consent to being contacted by anyone who accesses such information through this website. The creators of this website or the government of Kerala shall not be liable for any unauthorized use, misuse or sharing of such information.  
+  	</small>
+  </blockquote>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <script>
-    window.onload = function() {
-        $("#id_phone").attr('type', 'number');
-    }
+	$(".consent").click(function(event) {
+		var consent = $(this).attr('data-consent');
+		if(consent === 'confirm') {
+			$("[name=has_consented]").prop("checked", true);
+		} else if(consent === 'cancel'){
+			$("[name=has_consented]").prop("checked", false);
+		}
+		
+		$("#volunteer_consent_form").submit();
+	})
+	
+	
+	// $( "#volunteer_consent_form" ).submit(function( event ) {
+	//   alert( "Handler for .submit() called." );
+	//   event.preventDefault();
+	// })
+    
 </script>
 {% endblock %}

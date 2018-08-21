@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% load bootstrap3 %}
+
+<div class="container text-center">
+    <h1 class="main-logo">kerala<span style="font-weight: normal;">rescue  DMO Portal</span></h1>
+    <p style="margin-top:60px; margin-bottom: 30px">
+        <strong style="font-size:  40px ;"> Camp Stats per District </strong><br/>
+  </p>
+
+  <div id="requests-table" class="table-responsive">
+    <table id="req-table" class="table">
+        <thead>
+          <tr>
+            <th>District - ജില്ല</th>
+            <th>Total Camps</th>
+            <th>Total People</th>
+            <th>To‍tal Male</th>
+            <th>To‍tal Female</th>
+            <th>To‍tal Infants</th>
+            <th>Med Needed</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        {% for camp in camps %}
+            <tr>
+              <td>{{ camp.district }}</td>
+              <td>{{ camp.total_camp }}</td>
+              <td>{{ camp.total_people }}</td>
+              <td>{{ camp.total_male }}</td>
+              <td>{{ camp.total_female }}</td>
+              <td>{{ camp.total_infant }}</td>
+              <td>{{ camp.total_medical }}</td>
+              
+            </tr>
+        {% endfor %}
+      </tbody>
+      </table>
+    </div>
+
+
+</div>
+
+  {% endblock %}
