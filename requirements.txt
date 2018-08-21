@@ -20,3 +20,4 @@ pillow==5.2.0
 boto3==1.7.80
 botocore==1.10.80
 django-storages==1.6.6
+django-phonenumber-field

@@ -57,6 +57,7 @@ RAVEN_CONFIG = {
 # Application definition
 
 INSTALLED_APPS = [
+    'phonenumber_field',
     'mainapp.apps.MainappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -72,6 +73,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
 ]
+
+PHONENUMBER_DEFAULT_REGION = 'IN'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
