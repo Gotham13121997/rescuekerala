@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<div class="text-center">
+  <h3>Collection Centers</h3>
+</div>
+
+<div>
+    <table class="table">
+        <tr>
+          <th>Center Name</th>
+          <th>Address</th>
+          <th>Contacts</th>
+          <th>Materials Collecting</th>
+        </tr>
+    {% for center in object_list %}
+        <tr valign="top">
+              <!-- <td>{{ center.id }}</td> -->
+              <td>{{ center.name }}</td>
+              <td>{{ center.address }}</td>
+              <td>{{ center.contacts }}</td>
+              <td>{{ center.type_of_materials_collecting }}</td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="4">No Collection Centers added yet.</td></tr>
+    {% endfor %}
+    </table>
+
+    {% if is_paginated %}
+
+        <div class="pagination" >
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'collection_centers_list' %}?page=1">&laquo; first</a>
+                    <a href="{% url 'collection_centers_list' %}?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
+                    {% elif i > page_obj.min_page and i < page_obj.max_page or i|divisibleby:data.lim_page %}
+                        <a href="{% url 'collection_centers_list' %}?page={{ i }}">{{ i }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a href="{% url 'collection_centers_list' %}?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="{% url 'collection_centers_list' %}?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

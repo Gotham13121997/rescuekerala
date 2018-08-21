@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+
+ <div class="table-responsive" style="margin-top: 60px">
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="2" style="text-align:center;"><h3>Camp details for {{ req.name }}(#{{req.id}}) , Camp is {{req.status}} </h3></th>
+      </tr>
+    </thead>
+
+    <tbody>
+            <tr>
+                    <td><b> Camp Name : </b></td><td>{{ req.name }}</td>
+                  </tr>
+                  <tr>
+        <td><b> District : </b></td><td>{{ req.get_district_display }}</td>
+      </tr>
+      <tr>
+      <td><b> LSG Type : </b></td><td>{{ req.get_lsg_type_display }}</td>
+      </tr>
+      <tr>
+      <td><b> LSG Name : </b></td><td>{{ req.lsg_name }}</td>
+      </tr>
+
+      <tr>
+          <td><b> Ward  : </b></td><td>{{ req.ward_name }}</td>
+          </tr>
+          <tr>
+          <td><b> City  : </b></td><td>{{ req.city }}</td>
+          </tr>
+          
+
+      <tr>
+        <td><b> Location : </b></td><td>{{ req.location }}</td>
+      </tr>
+      <tr>
+        <td><b> GPS Location : </b></td>
+        <td>
+          {% if req.latlng %}
+            <a class="btn btn-sm btn-success" href="https://maps.google.com/?q={{ req.latlng }}" target="_blank">Open in maps</a>
+            <br>
+            Accuracy: {{ req.latlng_accuracy }}
+          {% else %}
+            NA
+          {% endif %}
+        </td>
+      </tr>
+
+      {% if req.map_link %}
+      <tr>
+            <td><b> Google Maps Link : </b></td><td> <a class="btn btn-sm btn-success" href="{{req.map_link}}"> Map Link </td>
+          </tr>
+          <tr>
+
+      <tr>
+      {% endif %}
+
+        <td><b> Facilities Avaliable : </b></td><td>{{ req.facilities_available }}</td>
+      </tr>
+      <tr>
+        <td><b> Contact number : </b></td><td><a href="tel:{{ req.contacts }}" >{{ req.contacts }}</a></td>
+      </tr>
+      <tr>
+        <td><b> Total People : </b></td><td>{{ req.total_people }}</td>
+      </tr>
+      <tr>
+        <td><b> Total Male : </b></td><td>{{ req.total_males }}</td>
+        </tr>      <tr>
+        <td><b> Total Female : </b></td><td>{{ req.total_females }}</td>
+        </tr>
+        <tr>
+        <td><b> Food Requirement : </b></td><td>{{ req.food_req }}</td>
+        </tr>
+        <tr>
+        <td><b> Clothing Requirement : </b></td><td>{{ req.clothing_req }}</td>
+        </tr>      <tr>
+        <td><b> Sanitary Requirement : </b></td><td>{{ req.sanitary_req }}</td>
+        </tr>
+        <tr>
+                <td><b> Medical Requirement : </b></td><td>{{ req.medical_req }}</td>
+                </tr>
+                <tr>
+                <td><b> Other Requirement : </b></td><td>{{ req.other_req }}</td>
+                </tr>    
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}

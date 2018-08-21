@@ -78,9 +78,11 @@
       <tr>
         <th>District - ജില്ല</th>
         <th>Name - പേര</th>
-        <th>Location - സ്ഥലം</th>
-        <th>Organization - സംഘടന</th>
-        <th>Phone - ഫോണ്‍ നമ്പര്‍</th>
+		{% if user.is_authenticated %}
+			<th>Location - സ്ഥലം</th>
+			<th>Organization - സംഘടന</th>
+			<th>Phone - ഫോണ്‍ നമ്പര്‍</th>
+		{% endif %}
         <th>Area - സന്നദ്ധസേവനം</th>
       </tr>
     </thead>
@@ -89,9 +91,11 @@
         <tr>
           <td>{{ req.get_district_display }}</td>
           <td>{{ req.name }}</td>
-          <td>{{ req.address }}</td>
-          <td>{{ req.organisation }}</td>
-          <td><a href="tel:{{ req.requestee_phone }}" >{{ req.phone }}</a></td>
+		  {% if user.is_authenticated %}
+			  <td>{{ req.address }}</td>
+			  <td>{{ req.organisation }}</td>
+			  <td><a href="tel:{{ req.requestee_phone }}" >{{ req.phone }}</a></td>
+		  {% endif %}
           <td>{{ req.get_area_display }}</td>
         </tr>
     {% endfor %}

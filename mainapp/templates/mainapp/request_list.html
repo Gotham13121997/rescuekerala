@@ -84,6 +84,7 @@
         <th>Phone - ഫോണ്‍ നമ്പര്‍</th>
         <th>Date - തീയതി</th>
         <th>More details - കൂടുതൽ വിശദാംശങ്ങൾ</th>
+		<th>Update</th>
       </tr>
     </thead>
     <tbody>
@@ -96,6 +97,7 @@
           <td><a href="tel:{{ req.requestee_phone }}" >{{ req.requestee_phone }}</a></td>
           <td>{{ req.dateadded }}</td>
           <td><a class="btn btn-sm btn-success" href="{%url 'requestdetailsview' req.id %}" target="_blank">More details</a>
+	  	  <td><a class="btn btn-sm btn-success" href="{%url 'requestupdateview' req.id %}" target="_blank">Update</a></td>
         </tr>
     {% endfor %}
   </tbody>

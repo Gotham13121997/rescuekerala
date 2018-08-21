@@ -5,7 +5,7 @@ from django.core.validators import EMPTY_VALUES
 from django.http import HttpResponse
 
 from .models import Request, Volunteer, Contributor, DistrictNeed, DistrictCollection, DistrictManager, vol_categories, \
-    RescueCamp, Person, NGO, Announcements, DataCollection , PrivateRescueCamp
+    RescueCamp, Person, NGO, Announcements, DataCollection , PrivateRescueCamp , CollectionCenter, CsvBulkUpload
 
 
 def create_csv_response(csv_name, header_row, body_rows):
@@ -59,7 +59,7 @@ class VolunteerAdmin(admin.ModelAdmin):
     actions = ['download_csv', 'mark_inactive', 'mark_active']
     readonly_fields = ('joined',)
     list_display = ('name', 'phone', 'organisation', 'joined', 'is_active')
-    list_filter = ('district', 'joined',)
+    list_filter = ('district', 'joined', 'is_active', 'has_consented')
 
     def download_csv(self, request, queryset):
         header_row = [f.name for f in Volunteer._meta.get_fields()]
@@ -120,12 +120,25 @@ class ContributorAdmin(admin.ModelAdmin):
         queryset.update(status='new')
         return
 
+
 class RescueCampAdmin(admin.ModelAdmin):
-    actions = ['download_csv', 'mark_as_closed', 'mark_as_active']
+    actions = ['download_csv', 'download_inmates' ,  'mark_as_closed', 'mark_as_active']
     list_display = ('district', 'name', 'location', 'status', 'contacts', 'facilities_available', 'total_people',
                     'total_males', 'total_females', 'total_infants', 'food_req',
                     'clothing_req', 'sanitary_req', 'medical_req', 'other_req')
     list_filter = ('district','status')
+
+
+    def download_inmates(self, request, queryset):
+        header_row = ('name', 'phone', 'age', 'gender', 'district', 'camped_at')
+        body_rows = []
+        campid = queryset[0].id
+        for person in Person.objects.all().filter(camped_at__id = campid):
+            row = [getattr(person, field) for field in header_row]
+            body_rows.append(row)
+
+        response = create_csv_response('InmatesOf{}'.format(queryset[0].name), header_row, body_rows)
+        return response
 
     def get_readonly_fields(self, request, obj=None):
         fields = []
@@ -168,7 +181,8 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 class PersonAdmin(admin.ModelAdmin):
     actions = ['download_csv']
-    list_display = ('name', 'phone', 'age', 'gender', 'district', 'camped_at')
+    list_display = ('name', 'camped_at', 'added_at', 'phone', 'age', 'gender', 'district')
+    ordering = ('-added_at',)
 
     def download_csv(self, request, queryset):
         header_row = ('name', 'phone', 'age', 'sex', 'district_name', 'camped_at')
@@ -185,6 +199,8 @@ class PersonAdmin(admin.ModelAdmin):
 class DataCollectionAdmin(admin.ModelAdmin):
     list_display = ['document_name', 'document', 'tag']
 
+class CsvBulkUploadAdmin(admin.ModelAdmin):
+    pass
 
 admin.site.register(Request, RequestAdmin)
 admin.site.register(Volunteer, VolunteerAdmin)
@@ -193,8 +209,10 @@ admin.site.register(DistrictNeed)
 admin.site.register(PrivateRescueCamp)
 admin.site.register(DistrictCollection)
 admin.site.register(DistrictManager)
+admin.site.register(CollectionCenter)
 admin.site.register(RescueCamp, RescueCampAdmin)
 admin.site.register(NGO, NGOAdmin)
 admin.site.register(Announcements, AnnouncementAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(DataCollection, DataCollectionAdmin)
+admin.site.register(CsvBulkUpload, CsvBulkUploadAdmin)

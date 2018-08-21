@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+
+
+<h2 align=center>
+  Private Camp List
+</h2>
+
+<hr>
+
+<div class="text-center text-danger">
+    {% if messages %}
+      {% for message in messages %}
+        <h4>{{ message }}</h4>
+      {% endfor %}
+    {% endif %}
+</div>
+
+<form action="" method="get" align=center>
+    {{ filter.form.as_p }}
+    <button class="btn btn-default" type="submit"><strong> Show Private Camps </strong> {% bootstrap_icon "chevron-right" %}</button>
+</form>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>District</th>
+            <th>LSG Type/LSG Name</th>
+            <th>Total People</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data %}
+        <tr>
+            <td><strong>{{ item.name }}</strong></td>
+            <td>{{ item.get_district_display }}</td>
+            <td>{{ item.get_lsg_type_display }}<br>{{ item.lsg_name }}</td>
+            <td>{{ item.total_people }}</td>
+            <td>
+                <div class="btn-group">
+                     <a href="/pcampdet?id={{ item.id  }}" class="btn btn-default">
+                        {% bootstrap_icon "search" %} Camp Details
+                    </a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if data.paginator.num_pages > 1 %}
+<div class="pagination" >
+  <span class="step-links">
+      {% if data.has_previous %}
+          <a href="?page=1&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">&laquo; first</a>
+          <a href="?page={{data.previous_page_number}}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">previous</a>
+      {% endif %}
+
+      {% for i in data.paginator.page_range %}
+      {% if data.number == i %}
+        <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
+      {% else %}
+        <a href="?page={{i}}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">{{ i }}</a>
+      {% endif %}
+      {% endfor %}
+
+      {% if data.has_next %}
+          <a href="?page={{ data.next_page_number }}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">next</a>
+          <a href="?page={{ data.paginator.num_pages }}&name__icontains={{ request.GET.name__icontains }}&district={{ request.GET.district }}">last &raquo;</a>
+      {% endif %}
+  </span>
+</div>
+{% endif %}
+
+{% endblock %}

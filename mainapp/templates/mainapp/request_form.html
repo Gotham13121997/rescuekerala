@@ -120,8 +120,18 @@
 		$('#instructionModal').on('hidden.bs.modal', function (e) {
 		  navigator.geolocation.getCurrentPosition(success, error, options);
 		})
-
-		$('#instructionModal').modal('show');
+    try {
+      navigator.permissions.query({'name': 'geolocation'}).then(
+        function(result) {
+          switch (result.state) {
+            case 'prompt': $('#instructionModal').modal('show'); break;
+            case 'granted': navigator.geolocation.getCurrentPosition(success, error, options); break;
+          }
+      })
+    } catch (err) {
+      // capture cases that don't have navigator or navigator.permissions
+      $('#instructionModal').modal('show');
+    }
 	}
 
 	function showLocationPickerForm(){
