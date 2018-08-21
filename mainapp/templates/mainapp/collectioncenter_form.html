@@ -20,3 +20,41 @@
     </form>
 </div>
 {% endblock %}
+
+
+{% block javascript %}
+
+    <script type="text/javascript">
+    $( document ).ready(function() {
+        console.log("document ready");
+
+        // function to hide and show relevant fields based on the is_inside_kerala checkbox selection
+        var toggle_form_fields = function() {
+            var is_inside_kerala = $("#id_is_inside_kerala").is(':checked');
+            console.log("is_inside_kerala: ", is_inside_kerala);
+            if (is_inside_kerala) {
+                $("#id_city").parents('div.form-group').hide();
+
+                $("#id_district").parents('div.form-group').show();
+                $("#id_lsg_type").parents('div.form-group').show();
+                $("#id_lsg_name").parents('div.form-group').show();
+                $("#id_ward_name").parents('div.form-group').show();
+            } else {
+                $("#id_city").parents('div.form-group').show();
+
+                $("#id_district").parents('div.form-group').hide();
+                $("#id_lsg_type").parents('div.form-group').hide();
+                $("#id_lsg_name").parents('div.form-group').hide();
+                $("#id_ward_name").parents('div.form-group').hide();
+            }
+        }
+
+        $("#id_is_inside_kerala").change(function() {
+            toggle_form_fields();
+        });
+
+        toggle_form_fields();
+
+    });
+    </script>
+{% endblock %}

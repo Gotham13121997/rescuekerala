@@ -547,8 +547,8 @@ class CollectionCenter(models.Model):
     )
     lsg_name = models.CharField(max_length=150, null=True, blank=True, verbose_name="LSG Name - സ്വയംഭരണ സ്ഥാപനത്തിന്റെ പേര്")
     ward_name = models.CharField(max_length=150, null=True, blank=True, verbose_name="Ward - വാർഡ്")
-    is_inside_kerala = models.BooleanField(verbose_name="Center inside kerala? - കേന്ദ്രം കേരളത്തിലാണോ")
-    city = models.CharField(max_length=150, verbose_name="City - നഗരം")
+    is_inside_kerala = models.BooleanField(default=True, verbose_name="Center inside kerala? - കേന്ദ്രം കേരളത്തിലാണോ")
+    city = models.CharField(null=True, blank=True, max_length=150, verbose_name="City - നഗരം")
     added_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
