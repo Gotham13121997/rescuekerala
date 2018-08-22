@@ -8,23 +8,29 @@
 </div>
 
 <div>
-    <table class="table">
+    <form action="" method="get">
+        {% bootstrap_form filter.form bound_css_class=False %}
+        <input value="Search" class="btn btn-primary" type="submit" />
+    </form>
+
+    <table class="table" id="collection-center-table">
         <tr>
-          <th>Center Name</th>
-          <th>Address</th>
-          <th>Contacts</th>
-          <th>Materials Collecting</th>
+            <th>Center ID</th>
+            <th>Center Name <span><input class="search" id="search-name" type="text" name="search-name" /></span></th>
+            <th>Address <span><input class="search" id="search-address" type="text" name="search-address" /></span></th>
+            <th>Contacts <span><input class="search" id="search-contact" type="text" name="search-contact" /></span></th>
+            <th>Materials Collecting <span><input class="search" id="search-materials" type="text" name="search-materials" /></span></th>
         </tr>
-    {% for center in object_list %}
+    {% for center in filter.qs %}
         <tr valign="top">
-              <!-- <td>{{ center.id }}</td> -->
+              <td>{{ center.id }}</td>
               <td>{{ center.name }}</td>
               <td>{{ center.address }}</td>
               <td>{{ center.contacts }}</td>
               <td>{{ center.type_of_materials_collecting }}</td>
         </tr>
     {% empty %}
-        <tr><td colspan="4">No Collection Centers added yet.</td></tr>
+        <tr><td colspan="5">No Collection Centers added yet.</td></tr>
     {% endfor %}
     </table>
 
@@ -54,4 +60,47 @@
     {% endif %}
 
 </div>
+{% endblock %}
+
+{% block javascript %}
+
+    <script type="text/javascript">
+        window.onload = function() {
+            $("input.search").keyup(search);
+        }
+
+        function search() {
+            $("#collection-center-table").find("tr").each(function(i,el) {
+                // skip header row
+                if (i == 0) return;
+                el = $(el);
+                var tds = el.find("td");
+
+                var name = tds.eq(1).text().toLowerCase();
+                var nameKey = $("#search-name").val().toLowerCase();
+
+                var address = tds.eq(2).text().toLowerCase();
+                var addressKey = $("#search-address").val().toLowerCase();
+
+                var contact = tds.eq(3).text().toLowerCase();
+                var contactKey = $("#search-contact").val().toLowerCase();
+
+                var materials = tds.eq(4).text().toLowerCase();
+                var materialsKey = $("#search-materials").val().toLowerCase();
+
+
+                if ( name.includes(nameKey)
+                     && address.includes(addressKey)
+                     && contact.includes(contactKey)
+                     && materials.includes(materialsKey)
+                   )
+                {
+                   el.show();
+                } else {
+                   el.hide();
+                }
+            });
+        }
+    </script>
+
 {% endblock %}

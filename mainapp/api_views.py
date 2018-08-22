@@ -1,3 +1,5 @@
+import json
+
 from .models import Person, RescueCamp, RequestUpdate, Request
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
@@ -102,3 +104,10 @@ def request_update_list(request):
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
     return JsonResponse(serializer.errors, status=404)
+
+
+@csrf_exempt
+def get_kerala_local_bodies(request):
+    from django.conf import settings
+    data = json.loads(open(settings.BASE_DIR + '/static/js/kerala_local_bodies.json').read())
+    return JsonResponse(data, safe=False)

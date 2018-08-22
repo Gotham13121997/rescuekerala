@@ -50,4 +50,38 @@
   </table>
 
 </div>
+
+<h3 style="text-align:center;">Updates</h3>
+ <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+		  <th>Status</th>
+		  <th>Updater Name</th>
+		  {% if user.is_authenticated %}
+			  <th>Updater Phone</th>
+		  {% endif %}
+		  <th>Notes</th>
+		  <th>Update Time</th>
+      </tr>
+    </thead>
+
+    <tbody>
+		
+	    {% for update in updates %}
+	        <tr>
+	          <td>{{ update.status }} {{ update.other_status }}</td>
+	          <td>{{ update.updater_name }}</td>
+			  {% if user.is_authenticated %}
+				  <td>{{ update.updater_phone }}</td>
+			  {% endif %}
+	          <td>{{ update.notes }}</td>
+	          <td>{{ update.update_ts }}</td>
+	        </tr>
+	    {% endfor %}
+		
+   </tbody>
+  </table>
+
+</div>
 {% endblock %}

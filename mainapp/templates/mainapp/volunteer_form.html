@@ -2,6 +2,15 @@
 {% load bootstrap3 %}
 
 {% block content %}
+<!--Navigation Breadcrumbs-->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="../ngo-volunteer/">Register as a Volunteer or NGO</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Register as Volunteer</li>
+  </ol>
+</nav>
+
 <h1 class="text-center">Register as Volunteer</h1>
 <h2 class="text-center">വൊളന്‍റീയര്‍ ആകാന്‍</h2>
   <form method="post" id="volunteer_consent_form">
@@ -47,8 +56,24 @@
 	
   {% else %}
   {% bootstrap_form form %}
-  {% buttons %}
-  <button type="submit" class="btn btn-primary">
+	{% buttons %}
+	
+	<blockquote>
+		<small>
+			By providing your personal information, you consent to making such information accessible to persons who visit this website.
+			You further acknowledge and agree that in order to serve the specific purposes for which personal information is volunteered
+			by you, such information needs to be accessible to the public at large and therefore, by volunteering your information
+			on this website, you consent to making such information public. By providing your phone number and email address, you further
+			consent to being contacted by anyone who accesses such information through this website. The creators of this website or
+			the government of Kerala shall not be liable for any unauthorized use, misuse or sharing of such information.
+		</small>
+	</blockquote>
+
+	<div class="checkbox">
+		<label><input id="register_consent" type="checkbox" value="">I agree to the terms and conditions</label>
+	</div>
+
+  <button type="submit" class="btn btn-primary" id="submit_btn">
   {% bootstrap_icon "star" %} Submit
   </button>
   {% endbuttons %}
@@ -58,29 +83,34 @@
   
   </form>
   
-  <blockquote>
-	  <small>
-	  By providing your personal information, you consent to making such information accessible to persons who visit this website. You further acknowledge and agree that in order to serve the specific purposes for which personal information is volunteered by you, such information needs to be accessible to the public at large and therefore, by volunteering your information on this website, you consent to making such information public. By providing your phone number and email address, you further consent to being contacted by anyone who accesses such information through this website. The creators of this website or the government of Kerala shall not be liable for any unauthorized use, misuse or sharing of such information.  
-  	</small>
-  </blockquote>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <script>
-	$(".consent").click(function(event) {
-		var consent = $(this).attr('data-consent');
-		if(consent === 'confirm') {
-			$("[name=has_consented]").prop("checked", true);
-		} else if(consent === 'cancel'){
-			$("[name=has_consented]").prop("checked", false);
-		}
+	// $(".consent").click(function(event) {
+	// 	var consent = $(this).attr('data-consent');
+	// 	if(consent === 'confirm') {
+	// 		$("[name=has_consented]").prop("checked", true);
+	// 	} else if(consent === 'cancel'){
+	// 		$("[name=has_consented]").prop("checked", false);
+	// 	}
 		
-		$("#volunteer_consent_form").submit();
-	})
+	// 	$("#volunteer_consent_form").submit();
+	// })
+
+	$('#submit_btn').click(function (){
+		if(!$('#register_consent').is(":checked")){
+			alert('Please review and accept our terms and conditions');	
+			event.preventDefault();
+			return false;
+		}
+	});
 	
 	
+
 	// $( "#volunteer_consent_form" ).submit(function( event ) {
 	//   alert( "Handler for .submit() called." );
-	//   event.preventDefault();
+	//   
 	// })
     
 </script>

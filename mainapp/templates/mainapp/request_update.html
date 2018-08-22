@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+ 
+ 
+ <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="2" style="text-align:center;">Request Updates</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td><b> District : </b></td><td>{{ view.original_request.get_district_display }}</td>
+      </tr>
+      <tr>
+        <td><b> Location : </b></td><td>{{ view.original_request.location }}</td>
+      </tr>
+      <tr>
+        <td><b> GPS Location : </b></td>
+        <td>
+          {% if view.original_request.latlng %}
+            <a class="btn btn-sm btn-success" href="https://maps.google.com/?q={{ view.original_request.latlng }}" target="_blank">Open in maps</a>
+            <br>
+            Accuracy: {{ view.original_request.latlng_accuracy }}
+          {% else %}
+            NA
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <td><b> Requestee : </b></td><td>{{ view.original_request.requestee }}</td>
+      </tr>	  
+      <tr>
+        <td><b> Contact number : </b></td><td><a href="tel:{{ req.requestee_phone }}" >{{ view.original_request.requestee_phone }}</a></td>
+      </tr>
+      <tr>
+        <td><b> Summary of request : </b></td><td>{{ view.original_request.summarise | linebreaks }}</td>
+      </tr>
+      <tr>
+        <td><b> Date : </b></td><td>{{ view.original_request.dateadded }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<h3 style="text-align:center;">Updates</h3>
+ <div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+		  <th>Status</th>
+		  <th>Updater Name</th>
+		  {% if user.is_authenticated %}
+			  <th>Updater Phone</th>
+		  {% endif %}
+		  <th>Notes</th>
+		  <th>Update Time</th>
+      </tr>
+    </thead>
+
+    <tbody>
+		
+	    {% for update in view.updates %}
+	        <tr>
+	          <td>{{ update.status }} {{ update.other_status }}</td>
+	          <td>{{ update.updater_name }}</td>
+			  {% if user.is_authenticated %}
+				  <td>{{ update.updater_phone }}</td>
+			  {% endif %}
+	          <td>{{ update.notes }}</td>
+	          <td>{{ update.update_ts }}</td>
+	        </tr>
+	    {% endfor %}
+		
+   </tbody>
+  </table>
+
+</div>
+
+  <h1 class="text-center">Request Updates</h1>
+  <h2 class="text-center">അഭ്യർത്ഥന അപ്ഡേറ്റു ചെയ്യുക</h2>
+  <form method="post"  class="simple-form" id="request_update_form">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+
+  {% buttons %}
+  <button type="submit" class="btn btn-primary">
+  {% bootstrap_icon "star" %} Submit
+  </button>
+  {% endbuttons %}
+  </form>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>
+	  $(document).ready(function() {
+		  $("[name=other_status]").attr('type', 'hidden');
+		  $("[name=other_status]").attr('required', false)
+		  $("[for=id_other_status]").hide();
+		  
+	  })
+	  $("[name=status]").change(function() {
+		  var value = this.value;
+		  if(value !== 'otr') {
+		  	$("[name=other_status]").attr('type', 'hidden')
+			$("[name=other_status]").attr('required', false)
+			// $("[for=id_other_status]").hide();
+		  } else {
+		  	$("[name=other_status]").attr('type', 'text')
+			  // $("[for=id_other_status]").show();
+		  }
+	  })
+	  
+  </script>
+{% endblock %}
